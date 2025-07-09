@@ -31,6 +31,6 @@ Technologia i dlaczego została użyta
 ## Korzystanie z aplikacji online
 
 Aplikacja jest dostępna online:  
-👉 [https://noteapp1234.netlify.app](https://noteapp1234.netlify.app)
+[https://noteapp1234.netlify.app](https://noteapp1234.netlify.app)
 
 Można przetestować dodawanie, edytowanie i usuwanie notatek oraz sprawdzić kalendarz.
