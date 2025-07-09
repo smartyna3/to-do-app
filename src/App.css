@@ -1,69 +1,304 @@
 body {
   margin: 0;
-  font-family: sans-serif;
-  background-color: #f7f7f7;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url('/lisc.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
 }
 
 .app {
-  max-width: 600px;
+  max-width: 800px;
   margin: auto;
   padding: 2rem;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 0 10px #ccc;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 10px 5px rgba(255, 255, 255, 0.429);
+  position: relative;
+  overflow: hidden;
+}
+
+.app::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.8),
+      transparent);
+}
+
+.app::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.8),
+      transparent,
+      rgba(255, 255, 255, 0.3));
 }
 
 h1 {
   text-align: center;
-  color: #333;
+  color: #1b5e20;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
 }
 
-.todo-item {
-  padding: 1rem;
-  border-bottom: 1px solid #eee;
+.add-btn {
+  display: block;
+  margin: 1rem auto;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border: none;
+  background: #81c784;
+  color: white;
+  border-radius: 10px;
   cursor: pointer;
   transition: background 0.3s;
 }
 
-.todo-item:hover {
-  background-color: #f0f0f0;
+.add-btn:hover {
+  background: #66bb6a;
 }
 
-.todo-item.done {
-  text-decoration: line-through;
-  color: gray;
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
 }
 
-.add-form {
+.note-card {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 1rem;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 8px 16px rgba(0, 128, 0, 0.1);
+  transition: transform 0.5s;
+}
+
+.note-card:hover {
+  transform: scale(1.02);
+}
+
+.note-card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  word-break: break-word;
+}
+
+.note-card button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.215);
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
 }
 
-.add-form input {
-  flex: 1;
+.modal-content {
+  background: rgba(255, 255, 255, 0.756);
+  backdrop-filter: blur(12px);
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.164);
+}
+
+.modal-content input,
+.modal-content textarea {
+  align-self: center;
+  width: 100%;
   padding: 0.5rem;
   font-size: 1rem;
+  border-radius: 10px;
+  border: 1px solid #a5d6a7;
+  background: rgba(255, 255, 255, 0.6);
 }
 
-.add-form button {
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-buttons button {
   padding: 0.5rem 1rem;
-  font-size: 1rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
 }
 
-/* Responsywność */
+.modal-buttons button[type="submit"] {
+  background-color: #81c784;
+  color: white;
+}
+
+.modal-buttons button[type="submit"]:hover {
+  background-color: #66bb6a;
+}
+
+.modal-buttons button[type="button"] {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.modal-buttons button[type="button"]:hover {
+  background-color: #ccc;
+}
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.menu {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+}
+
+.menu a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #2e7d32;
+}
+
+.menu a:hover {
+  color: #1b5e20;
+}
+
+.calendar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border-radius: 30px;
+  margin: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 100, 0, 0.1);
+}
+
+.react-calendar {
+  width: 320px;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  border-radius: 20px;
+  padding: 1rem;
+  font-family: inherit;
+  box-shadow: 0 6px 18px rgba(0, 128, 0, 0.2);
+}
+
+.react-calendar__tile {
+  background: transparent;
+  border-radius: 10px;
+  text-align: center;
+  padding: 10px 0;
+  color: #2e7d32;
+  transition: all 0.3s ease;
+}
+
+.react-calendar__tile--now {
+  background: rgba(76, 175, 80, 0.2);
+  border: 1px solid #66bb6a;
+}
+
+.react-calendar__tile--active {
+  background: #a5d6a7b2;
+  color: white;
+}
+
+.react-calendar__tile:hover {
+  background: rgba(100, 200, 100, 0.3);
+}
+
+.react-calendar__navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.react-calendar__navigation button {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: #2e7d32;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 10px;
+  transition: background 0.3s;
+}
+
+.react-calendar__navigation button,
+.react-calendar__navigation button:focus,
+.react-calendar__navigation button:active,
+.react-calendar__navigation button:focus-visible {
+  background: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 @media (max-width: 600px) {
+  .notes-grid {
+    grid-template-columns: 1fr;
+  }
+
   .app {
-    margin: 1rem;
     padding: 1rem;
+    margin: 1rem;
   }
 
-  .add-form {
-    flex-direction: column;
+  .note-card {
+    padding: 0.8rem;
+    font-size: 1rem;
+    transition: none;
   }
 
-  .add-form input,
-  .add-form button {
-    width: 100%;
+  .calendar-wrapper {
+    padding: 0.5rem;
+    margin: 0.5rem;
   }
 }

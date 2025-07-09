@@ -1,5 +1,5 @@
-export interface Todo {
+export interface Note {
   id: number;
-  text: string;
-  done: boolean;
+  title: string;
+  content: string;
 }

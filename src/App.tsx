@@ -1,46 +1,57 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import NotesPage from "./pages/NotesPage";
+import CalendarPage from "./pages/CalendarPage";
+import { Note } from "./types";
 import "./App.css";
-import { Todo } from "./types";
-import AddTodoForm from "./components/AddTodoForm";
-import TodoList from "./components/TodoList";
 
 const App: React.FC = () => {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [notes, setNotes] = useState<Note[]>(() => {
+    const stored = localStorage.getItem("notes");
+    return stored ? JSON.parse(stored) : [];
+  });
 
   useEffect(() => {
-    const stored = localStorage.getItem("todos");
-    if (stored) {
-      setTodos(JSON.parse(stored));
-    }
-  }, []);
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
 
-  useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
-
-  const addTodo = (text: string) => {
-    const newTodo: Todo = {
-      id: Date.now(),
-      text,
-      done: false,
-    };
-    setTodos([newTodo, ...todos]);
+  const saveNote = (note: Note) => {
+    setNotes((prev) => {
+      const exists = prev.find((n) => n.id === note.id);
+      if (exists) {
+        return prev.map((n) => (n.id === note.id ? note : n));
+      }
+      return [note, ...prev];
+    });
   };
 
-  const toggleTodo = (id: number) => {
-    setTodos((prev) =>
-      prev.map((todo) =>
-        todo.id === id ? { ...todo, done: !todo.done } : todo
-      )
-    );
+  const deleteNote = (id: number) => {
+    setNotes((prev) => prev.filter((note) => note.id !== id));
   };
 
   return (
-    <div className="app">
-      <h1>My To-Do List</h1>
-      <AddTodoForm addTodo={addTodo} />
-      <TodoList todos={todos} toggleTodo={toggleTodo} />
-    </div>
+    <Router>
+      <div className="app">
+        <nav className="menu">
+          <Link to="/">Notes</Link>
+          <Link to="/calendar">Calendar</Link>
+        </nav>
+
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <NotesPage
+                notes={notes}
+                onSave={saveNote}
+                onDelete={deleteNote}
+              />
+            }
+          />
+          <Route path="/calendar" element={<CalendarPage />} />
+        </Routes>
+      </div>
+    </Router>
   );
 };
 
