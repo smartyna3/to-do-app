@@ -31,6 +31,7 @@ const App: React.FC = () => {
 
   return (
     <Router>
+      <div className="background" />
       <div className="app">
         <nav className="menu">
           <Link to="/">Notes</Link>
