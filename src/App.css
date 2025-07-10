@@ -11,7 +11,7 @@ body {
 
 .app {
   max-width: 800px;
-  min-height: 400px;
+  min-height: 620px;
   margin: auto;
   padding: 2rem;
   background: rgba(255, 255, 255, 0.15);
