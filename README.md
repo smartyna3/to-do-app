@@ -22,7 +22,7 @@ Technologia i dlaczego została użyta
 **React**  - do budowy dynamicznego i komponentowego interfejsu  
 **TypeScript**  - dla bezpieczeństwa typów i lepszej organizacji kodu
 **React Router**  - do obsługi podstron (Notatki / Kalendarz)
-**React Calendar**  - do łatwej implementacji nowoczesnego widoku kalendarza 
+**React Calendar**  - do łatwej implementacji widoku kalendarza 
 **CSS / SCSS**  - do stylizacji komponentów
 **localStorage**  - do przechowywania notatek bez konieczności użycia backendu 
 
